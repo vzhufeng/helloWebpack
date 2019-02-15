@@ -1,0 +1,26 @@
+{
+  "name": "hellowebpack",
+  "version": "0.0.1",
+  "description": "将webpack功能重新包装，通过配置文件和命令行提供出来",
+  "main": "index.js",
+  "bin": {
+    "hw": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vzhufeng/helloWebpack.git"
+  },
+  "author": "vzhufeng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vzhufeng/helloWebpack/issues"
+  },
+  "homepage": "https://github.com/vzhufeng/helloWebpack#readme",
+  "dependencies": {
+    "inquirer": "6.2.2",
+    "lodash": "4.17.11"
+  }
+}
