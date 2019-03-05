@@ -2,31 +2,44 @@
 
 const fs = require("fs");
 const path = require("path");
-const _merge = require("lodash/merge");
-const _isObject = require("lodash/isObject");
-const { confirm, withProm } = require("./util");
-const pkgConfig = require("./pkgConfig");
+const merge = require('webpack-merge');
+
+const { confirm, list, withProm } = require("./util");
 
 const dir = process.cwd();
-const getTargetName = p => path.resolve(dir, p);
-const getDirName = p => path.resolve(__dirname, p);
+const getTargetName = p => path.resolve(dir, ...p);
+const getDirName = p => path.resolve(__dirname, ...p);
+let projKind = "react";
 
 // 入口
-readPkg();
+list({
+  message: "需要搭建一个react工程还是vue工程",
+  name: "kind",
+  choices: ["react", "vue"],
+  cb: answers => {
+    projKind = answers.kind;
+    readPkg();
+  }
+});
 
 function readPkg() {
   // 把dev依赖写入
   function mergePkg(pkgObj) {
-    if (_isObject(pkgObj)) {
+    if (toString.call(pkgObj) === '[object Object]') {
+      const config = require(getDirName([projKind, "pkg.js"]));
       const pkgStr = JSON.stringify(
-        _merge(pkgObj, {
-          devDependencies: pkgConfig.dev,
-          scripts: { dev: "webpack-dev-server" }
+        merge(pkgObj, {
+          devDependencies: config.dev,
+          dependencies: config.dep,
+          scripts: {
+            dev: "webpack --config ./webpack-config/dev.js --progress --watch",
+            build: "webpack --config ./webpack-config/prod.js --progress"
+          }
         }),
         null,
         "  "
       );
-      fs.writeFile(getTargetName('package.json'), pkgStr, err => {
+      fs.writeFile(getTargetName(["package.json"]), pkgStr, err => {
         if (err) {
           // pkg出错，不进行后面的创建文件操作
           console.log("当前操作：写配置到package.json文件", err);
@@ -39,7 +52,7 @@ function readPkg() {
     }
   }
 
-  fs.readFile(getTargetName('package.json'), (err, buf) => {
+  fs.readFile(getTargetName(["package.json"]), (err, buf) => {
     if (err) {
       if (err.code === "ENOENT") {
         console.log("package.json文件不存在，请先执行npm init");
@@ -52,10 +65,10 @@ function readPkg() {
         pkgObj = JSON.parse(buf.toString());
       } catch (e) {}
 
-      if (pkgObj.devDependencies || pkgObj.scripts) {
+      if (pkgObj.dependencies || pkgObj.devDependencies || pkgObj.scripts) {
         confirm({
           message:
-            "package.json文件中已有devDependencies或scripts字段，helloWebpack会对相同的字段进行覆盖，是否继续",
+            "package.json文件中已有dependencies或devDependencies或scripts字段，helloWebpack会对相同的字段进行覆盖，是否继续",
           name: "cover",
           cb: answers => {
             if (answers.cover) {
@@ -74,26 +87,36 @@ function readPkg() {
 
 async function createFiles() {
   try {
-    await withProm(createFile, { opPath: 'webpack.config.js' });
+    await withProm(makeDir, ["webpack-config"]);
 
-    await withProm(makeDir, "src");
+    await withProm(createFile, { opPath: ["webpack-config", "base.js"] });
+    await withProm(createFile, { opPath: ["webpack-config", "dev.js"] });
+    await withProm(createFile, { opPath: ["webpack-config", "plugins.js"] });
+    await withProm(createFile, { opPath: ["webpack-config", "prod.js"] });
+    await withProm(createFile, { opPath: ["webpack-config", "rules.js"] });
+    await withProm(createFile, { opPath: ["webpack-config", "utils.js"] });
+
+    await withProm(makeDir, ["src"]);
+    await withProm(makeDir, ["src", "example"]);
 
     await withProm(createFile, {
-      opPath: "entry.html",
-      dstPath: "src/index.html"
+      opPath: [projKind, "entry.html"],
+      dstPath: ["src", "example", "index.html"]
     });
     await withProm(createFile, {
-      opPath: "entry.js",
-      dstPath: "src/index.js"
+      opPath: [projKind, "entry.js"],
+      dstPath: ["src", "example", "index.js"]
     });
 
-    await withProm(createFile, { opPath: "babelrc", dstPath: ".babelrc" });
+    await withProm(createFile, { opPath: [projKind, "babelrc"], dstPath: [".babelrc"] });
     // await withProm(createFile, {
     //   opPath: "eslintrc",
     //   dstPath: ".eslintrc.json"
     // });
-    console.log('helloWebpack已完成工程的搭建，执行npm install安装相关依赖');
-    console.log('安装依赖后，运行npm run dev启动工程');
+
+    console.log("helloWebpack已完成工程的搭建，执行npm install安装相关依赖");
+    console.log("安装依赖后，运行npm run dev启动工程");
+
   } catch (e) {
     console.log(e);
   }
@@ -101,10 +124,12 @@ async function createFiles() {
 
 // 创建文件
 function createFile(res, rej, { opPath, dstPath }) {
+  const dst = dstPath || opPath;
+
   function wf() {
     fs.copyFile(
       getDirName(opPath), // src
-      getTargetName(dstPath || opPath), // dst
+      getTargetName(dst), // dst
       err => {
         if (err) {
           console.log(err);
@@ -115,18 +140,18 @@ function createFile(res, rej, { opPath, dstPath }) {
     );
   }
 
-  fs.stat(getTargetName(dstPath || opPath), err => {
+  fs.stat(getTargetName(dst), err => {
     if (err) {
       if (err.code === "ENOENT") {
         // 文件不存在，直接拷贝
         wf();
       } else {
-        console.log(`当前操作：创建文件${dstPath || opPath}`, err);
+        console.log(`当前操作：创建文件${dst}`, err);
         rej();
       }
     } else {
       confirm({
-        message: `文件${dstPath || opPath}已存在，helloWebpack会进行覆盖，是否继续`,
+        message: `文件${dst.join("/")}已存在，helloWebpack会进行覆盖，是否继续`,
         name: "cover",
         cb: answers => {
           if (answers.cover) {
