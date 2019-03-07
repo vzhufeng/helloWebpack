@@ -2,6 +2,11 @@
 
 用于搭建前端react / vue的业务工程（注意是业务工程，写工具库不要用）
 
+## 安装
+```
+npm install @vzhufeng/hello-webpack -g
+```
+
 ## 使用
 1. npm init，主要就是写个工程名字而已
 2. hw，向package.json写入react / vue工程相关依赖，这一步里遇到已经有相同文件或者相同字段都会询问是否需要进行覆盖
