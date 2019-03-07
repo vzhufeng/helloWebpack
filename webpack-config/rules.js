@@ -8,11 +8,11 @@ module.exports = [
     use: ["babel-loader"],
     include: resolve(["src"])
   },
-  // {
-  //   test: /\.vue$/,
-  //   use: ["vue-loader"],
-  //   include: resolve(['src'])
-  // },
+  {
+    test: /\.vue$/,
+    use: ["vue-loader"],
+    include: resolve(["src"])
+  },
   {
     test: /\.(sass|scss|css)$/,
     use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
@@ -30,6 +30,11 @@ module.exports = [
   },
   {
     test: /\.(png|svg|jpeg|jpg|gif)$/,
+    use: ["file-loader"],
+    include: resolve(["assets"])
+  },
+  {
+    test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)$/,
     use: ["file-loader"],
     include: resolve(["assets"])
   }

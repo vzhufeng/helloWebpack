@@ -18,11 +18,11 @@ module.exports = merge(base, {
   ),
   optimization: {
     minimize: true,
+    chunks: "all",
     splitChunks: {
       cacheGroups: {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
-          chunks: "all",
           name: 'vendor'
         }
       }

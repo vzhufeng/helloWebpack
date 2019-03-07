@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const WebpackManifestPlugin = require("webpack-manifest-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const { htmlEntry, resolve } = require("./utils");
 
@@ -17,21 +18,10 @@ for (let i = 0, len = htmlEntry.length; i < len; i++) {
   );
 }
 
-const miniCssExtractPlugin = new MiniCssExtractPlugin({
-  filename: "[name]_[contenthash].css"
-});
-
-const webpackManifestPlugin = new WebpackManifestPlugin({
-  filename: "manifest.json"
-});
-
-const cleanWebpackPlugin = new CleanWebpackPlugin(["dist"], {
-  root: resolve([]),
-});
-
 module.exports = [
   ...htmlWebpackPluginArr,
-  miniCssExtractPlugin,
-  webpackManifestPlugin,
-  cleanWebpackPlugin
+  new MiniCssExtractPlugin({ filename: "[name]_[contenthash].css" }),
+  new CleanWebpackPlugin(["dist"], { root: resolve([]) }),
+  new WebpackManifestPlugin({ filename: "manifest.json" }),
+  new VueLoaderPlugin()
 ];

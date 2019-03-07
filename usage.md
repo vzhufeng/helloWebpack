@@ -1,11 +1,14 @@
 ## 1.0.0
-支持多页面，不支持热更新
+支持多页面，不支持热更新，不支持单独打包某个目录
+
+配置文件会全部导出到工程目录下的webpack-config文件夹中
 
 开发模式，输出本地文件（输出到dist）：npm run dev
 生产编译（输出到dist）：npm run build
 
 项目结构如下，不按照这个结构需要修改代码：
 ```
+// for react
 proj
   |-src
     |-page1
@@ -19,7 +22,21 @@ proj
       |-other.js
       |-page.scss
   |-assets
-    |-icon.png    
+    |-icon.png
+
+// for vue    
+proj
+  |-src
+    |-page1
+      |-index.html
+      |-index.js
+      |-page.vue
+    |-page2
+      |-index.html
+      |-index.js
+      |-other.vue
+  |-assets
+    |-icon.png  
 ```
 其中，index.html和index.js是必需文件，index.js是打包入口，index.html是模板文件，样式文件的文件名可以随意；assets目录下可以放图标、图片等静态资源
 

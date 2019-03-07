@@ -107,6 +107,10 @@ async function createFiles() {
       opPath: [projKind, "entry.js"],
       dstPath: ["src", "example", "index.js"]
     });
+    await withProm(projKind === 'vue' ? createFile : ()=>{}, {
+      opPath: [projKind, "entry.vue"],
+      dstPath: ["src", "example", "entry.vue"]
+    });
 
     await withProm(createFile, { opPath: [projKind, "babelrc"], dstPath: [".babelrc"] });
     // await withProm(createFile, {
