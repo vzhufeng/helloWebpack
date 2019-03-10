@@ -2,6 +2,17 @@
 
 用于搭建前端react / vue的业务工程（注意是业务工程，写工具库不要用）
 
+## 特性
+node >= 8
+
+✅react、vue
+
+✅sass、less
+
+❎postcss
+
+❎ts
+
 ## 安装
 ```
 npm install @vzhufeng/hello-webpack -g
@@ -23,7 +34,6 @@ npm install @vzhufeng/hello-webpack -g
 - webpack-config文件夹
 - src/example文件夹
 - .babelrc
-
 
 
 

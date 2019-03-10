@@ -18,7 +18,6 @@ module.exports = merge(base, {
   ),
   optimization: {
     minimize: true,
-    chunks: "all",
     splitChunks: {
       cacheGroups: {
         vendor: {

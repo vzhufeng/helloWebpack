@@ -1,11 +1,12 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const { resolve } = require("./utils");
+const path = require("path");
 
 module.exports = [
   {
     test: /\.(js|jsx)$/,
-    use: ["babel-loader"],
+    use: [{ loader: "babel-loader", options: { cacheDirectory: true } }],
     include: resolve(["src"])
   },
   {
@@ -25,17 +26,32 @@ module.exports = [
   },
   {
     test: /\.(woff|woff2|eot|ttf|otf)$/,
-    use: ["file-loader"],
-    include: resolve(["assets"])
+    use: [
+      {
+        loader: "file-loader",
+        options: { name: path.join("static", "[name].[ext]") }
+      }
+    ],
+    include: resolve(["src", "assets"])
   },
   {
     test: /\.(png|svg|jpeg|jpg|gif)$/,
-    use: ["file-loader"],
-    include: resolve(["assets"])
+    use: [
+      {
+        loader: "file-loader",
+        options: { name: path.join("static", "[name].[ext]") }
+      }
+    ],
+    include: resolve(["src", "assets"])
   },
   {
     test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)$/,
-    use: ["file-loader"],
-    include: resolve(["assets"])
+    use: [
+      {
+        loader: "file-loader",
+        options: { name: path.join("static", "[name].[ext]") }
+      }
+    ],
+    include: resolve(["src", "assets"])
   }
 ];

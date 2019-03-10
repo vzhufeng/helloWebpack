@@ -13,7 +13,8 @@ for (let i = 0, len = htmlEntry.length; i < len; i++) {
     new HtmlWebpackPlugin({
       template: ele.path,
       filename: `${ele.name}.html`,
-      chunks: [ele.name, "vendor"]
+      chunks: [ele.name, "vendor"],
+      chunksSortMode: 'dependency'
     })
   );
 }

@@ -14,6 +14,7 @@ module.exports = {
     "less-loader": "4.1.0",
     "style-loader": "0.23.0",
     "vue-loader": "15.5.0",
+    "file-loader": "3.0.0",
     "html-webpack-plugin": "3.2.0",
     "clean-webpack-plugin": "1.0.0",
     "webpack-manifest-plugin": "2.0.0",

@@ -6,8 +6,7 @@ const merge = require('webpack-merge');
 
 const { confirm, list, withProm } = require("./util");
 
-const dir = process.cwd();
-const getTargetName = p => path.resolve(dir, ...p);
+const getTargetName = p => path.resolve(...p);
 const getDirName = p => path.resolve(__dirname, ...p);
 let projKind = "react";
 

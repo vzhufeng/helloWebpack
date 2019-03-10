@@ -14,6 +14,7 @@ module.exports = {
     "sass-loader": "7.1.0",
     "less-loader": "4.1.0",
     "style-loader": "0.23.0",
+    "file-loader": "3.0.0",
     "html-webpack-plugin": "3.2.0",
     "clean-webpack-plugin": "1.0.0",
     "webpack-manifest-plugin": "2.0.0",

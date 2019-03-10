@@ -1,6 +1,8 @@
 ## 1.0.0
 ✅多页面
+
 ❎热更新
+
 ❎单独打包某个目录
 
 配置文件会全部导出到工程目录下的webpack-config文件夹中
@@ -24,8 +26,10 @@ proj
       |-index.js
       |-other.js
       |-page.scss
+  |-components // 公共组件目录
+  |-utils //   公共函数目录    
   |-assets
-    |-icon.png
+    |-icon.png //最好上传cdn，能不用本地资源就不用
 
 // for vue    
 proj
@@ -38,6 +42,8 @@ proj
       |-index.html
       |-index.js
       |-other.vue
+  |-components // 公共组件目录
+  |-utils //   公共函数目录
   |-assets
     |-icon.png  
 ```
@@ -49,7 +55,9 @@ dist
   |-page1.html
   |-page1_xxxxxx.js
   |-page1_xxxxxx.css
+  |-static
+    |-icon.png
 ```
-其中xxxxxx表示文件内容的hash，
+其中xxxxxx表示文件内容的hash，静态资源（图片、字体等）会放在dist/static目录下
 
 

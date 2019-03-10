@@ -12,6 +12,10 @@ const readDir = p => {
 
   for (let i = 0, len = items.length; i < len; i++) {
     const ele = items[i];
+    // 跳过预设的几个目录
+    if('assets,utils,components'.indexOf(ele) >= 0){
+      continue;
+    }
     const info = fs.statSync(resolve([p, ele]));
     if (info.isDirectory()) {
       htmlEntry.push({ path: resolve([p, ele, "index.html"]), name: ele });
