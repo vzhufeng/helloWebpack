@@ -7,6 +7,7 @@ module.exports = {
     // babel
     "@babel/core": "7.0.0",
     "@babel/preset-env": "7.0.0",
+    "@babel/plugin-proposal-class-properties": "7.0.0",
     // webapck
     "babel-loader": "8.0.0",
     "css-loader": "2.1.0",
