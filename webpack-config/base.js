@@ -1,18 +1,19 @@
-const { jsEntry, resolve } = require("./utils");
+const { jsEntry, resolve, config } = require("./utils");
 
 module.exports = {
   entry: jsEntry,
   output: {
-    path: resolve(["dist"]),
-    filename: "[name]_[contenthash].js",
-    sourceMapFilename: "[name].map"
+    path: config.prod.output,
+    filename: "[name]_[contenthash].js"
   },
   resolve: {
     alias: {
       Utils: resolve(["src", "utils"]),
       Components: resolve(["src", "components"]),
-      Assets: resolve(["src", "assets"]),
+      Assets: resolve(["src", "assets"])
     },
-    extensions: [".web.js", ".mjs", ".js", ".json", ".web.jsx", ".jsx"] // import时可以不用写这些后缀名
+    // import时可以不用写这些后缀名
+    extensions: [".vue", ".js", ".jsx"], 
+    mainFields: ["jsnext:main", "browser", "main"]
   }
 };

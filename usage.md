@@ -5,13 +5,13 @@
 
 ❎单独打包某个目录
 
-配置文件会全部导出到工程目录下的webpack-config文件夹中
+配置文件会全部导出到工程目录下的webpack-config文件夹中，方便每个工程的特殊需求修改
 
-开发模式，输出本地文件（输出到dist）：npm run dev
+开发模式，输出本地文件（输出到local）：npm run dev
 
 生产编译（输出到dist）：npm run build
 
-项目结构如下，不按照这个结构需要修改代码：
+项目结构如下，**不按照这个结构需要修改代码**：
 ```
 // for react
 proj
@@ -58,6 +58,6 @@ dist
   |-static
     |-icon.png
 ```
-其中xxxxxx表示文件内容的hash，静态资源（图片、字体等）会放在dist/static目录下
+其中xxxxxx表示文件内容的hash（dev模式下没有hash），静态资源（图片、字体等）会放在dist/static目录下
 
 

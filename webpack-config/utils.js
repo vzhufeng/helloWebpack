@@ -6,6 +6,21 @@ const htmlEntry = [];
 
 const resolve = p => path.resolve(__dirname, '..', ...p);
 
+// 自定义设置
+const config = {
+  public: {
+    port: 3001,
+    htmlEntry: 'index.html',
+    jsEntry: 'index.js'
+  },
+  dev: {
+    output: resolve(["local"])
+  },
+  prod: {
+    output: resolve(["dist"])
+  }
+};
+
 const readDir = p => {
   const items = fs.readdirSync(resolve([p]));
   if (!items) return;
@@ -18,8 +33,8 @@ const readDir = p => {
     }
     const info = fs.statSync(resolve([p, ele]));
     if (info.isDirectory()) {
-      htmlEntry.push({ path: resolve([p, ele, "index.html"]), name: ele });
-      jsEntry[ele] = resolve([p, ele, "index.js"]);
+      htmlEntry.push({ path: resolve([p, ele, config.public.htmlEntry]), name: ele });
+      jsEntry[ele] = resolve([p, ele, config.public.jsEntry]);
     }
   }
 };
@@ -27,6 +42,7 @@ const readDir = p => {
 readDir("src");
 
 module.exports = {
+  config,
   resolve,
   jsEntry,
   htmlEntry

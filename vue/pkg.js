@@ -26,6 +26,7 @@ module.exports = {
     "less": "3.8.0",
     "webpack-merge": "4.1.0",
     "webpack": "4.29.0",
-    "webpack-cli": "3.2.0"
+    "webpack-cli": "3.2.0",
+    "express": "4.16.0",
   }
 };

@@ -31,12 +31,12 @@ function readPkg() {
           devDependencies: config.dev,
           dependencies: config.dep,
           scripts: {
-            dev: "webpack --config ./webpack-config/dev.js --progress --watch",
-            build: "webpack --config ./webpack-config/prod.js --progress"
+            dev: `node ./webpack-config/dev.js ${projKind}`,
+            build: `node ./webpack-config/prod.js ${projKind}`
           }
         }),
         null,
-        "  "
+        2
       );
       fs.writeFile(getTargetName(["package.json"]), pkgStr, err => {
         if (err) {

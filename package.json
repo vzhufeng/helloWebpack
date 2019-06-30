@@ -1,6 +1,6 @@
 {
   "name": "@vzhufeng/hello-webpack",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "make it easier to startup a react/vue project with webpack",
   "keywords": [
     "webpack",

@@ -1,9 +1,9 @@
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
 const WebpackManifestPlugin = require("webpack-manifest-plugin");
-const VueLoaderPlugin = require("vue-loader/lib/plugin");
+const ModuleConcatenationPlugin = require("webpack/lib/optimize/ModuleConcatenationPlugin");
 
-const { htmlEntry, resolve } = require("./utils");
+const { htmlEntry, resolve, config } = require("./utils");
 
 const htmlWebpackPluginArr = [];
 for (let i = 0, len = htmlEntry.length; i < len; i++) {
@@ -20,7 +20,7 @@ for (let i = 0, len = htmlEntry.length; i < len; i++) {
 
 module.exports = [
   ...htmlWebpackPluginArr,
-  new CleanWebpackPlugin(["dist"], { root: resolve([]) }),
+  new webpack.ProgressPlugin(), //显示进度
   new WebpackManifestPlugin({ filename: "manifest.json" }),
-  new VueLoaderPlugin()
+  new ModuleConcatenationPlugin(), //scope hoist
 ];

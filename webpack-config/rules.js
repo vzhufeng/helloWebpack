@@ -1,27 +1,12 @@
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
 const { resolve } = require("./utils");
 const path = require("path");
+
+// include会导致src以外的目录的文件不处理，可能会导致一些问题，注意
 
 module.exports = [
   {
     test: /\.(js|jsx)$/,
     use: [{ loader: "babel-loader", options: { cacheDirectory: true } }],
-    include: resolve(["src"])
-  },
-  {
-    test: /\.vue$/,
-    use: ["vue-loader"],
-    include: resolve(["src"])
-  },
-  {
-    test: /\.(sass|scss|css)$/,
-    use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
-    include: resolve(["src"])
-  },
-  {
-    test: /\.less$/,
-    use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
     include: resolve(["src"])
   },
   {

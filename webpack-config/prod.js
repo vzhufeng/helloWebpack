@@ -1,30 +1,52 @@
 const merge = require("webpack-merge");
+const webpack = require("webpack");
 const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const base = require("./base");
 const rules = require("./rules");
 const plugins = require("./plugins");
+const { resolve, config } = require("./utils");
 
-module.exports = merge(base, {
+const wpConfig = merge(base, {
   // 模式
   mode: "production",
   // 模块，loader
   module: {
-    rules
+    rules: [
+      ...rules,
+      {
+        test: /\.(sass|scss|css)$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+      },
+      {
+        test: /\.less$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+      },
+      process.argv[2] === 'vue' ? {
+        test: /\.vue$/,
+        use: ["vue-loader"],
+        include: resolve(["src"])
+      } : {}
+    ]
   },
   // 插件
-  plugins: plugins.concat(
+  plugins: [
+    ...plugins,
+    new CleanWebpackPlugin([config.prod.output], { root: resolve([]) }),
     new OptimizeCssAssetsWebpackPlugin(),
-    new MiniCssExtractPlugin({ filename: "[name]_[contenthash].css" })
-  ),
+    new MiniCssExtractPlugin({ filename: "[name]_[contenthash].css" }),
+    process.argv[2] === 'vue' ? new VueLoaderPlugin() : ()=>{}
+  ],
   optimization: {
     minimize: true,
     splitChunks: {
       cacheGroups: {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendor'
+          name: "vendor"
         }
       }
     }
@@ -35,4 +57,26 @@ module.exports = merge(base, {
     assetFilter: assetFilename =>
       assetFilename.endsWith(".css") || assetFilename.endsWith(".js") // 过滤资源文件类型
   }
+});
+
+webpack(wpConfig, (err, stats) => {
+  if (err) throw err;
+
+  process.stdout.write(
+    `${stats.toString({
+      colors: true,
+      modules: false,
+      children: false, // If you are using ts-loader, setting this to true will make TypeScript errors show up during build.
+      chunks: false,
+      chunkModules: false
+    })}\n\n`
+  );
+
+  if (stats.hasErrors()) {
+    // 打印出webapck的详细报错
+    // console.log(stats.toJson());
+    process.exit(1);
+  }
+
+  // 编译完成后执行的操作，比如上传cdn等
 });

@@ -1,6 +1,6 @@
 # helloWebpack
 
-用于搭建前端react / vue的业务工程（注意是业务工程，写工具库不要用）
+用于搭建前端react / vue的业务工程（注意是业务工程，写工具库要做修改）
 
 ## 特性
 node >= 8
@@ -27,7 +27,7 @@ npm install @vzhufeng/hello-webpack -g
 更多配置和使用查看usage.md，https://github.com/vzhufeng/helloWebpack/blob/master/usage.md
 
 ## todo
-- 处理打包的各种选项和相关支持
+- 只打包某个目录
 
 ## 修改文件
 - package.json
