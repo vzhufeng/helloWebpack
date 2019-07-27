@@ -14,7 +14,7 @@ const app = express();
 // 本地监听的端口
 const port = config.public.port;
 // 本地监听的目录
-app.use(express.static(config.dev.output));
+app.use(express.static(resolve([])));
 app.listen(port);
 
 const wpConfig = merge(base, {

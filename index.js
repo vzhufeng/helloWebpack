@@ -31,8 +31,9 @@ function readPkg() {
           devDependencies: config.dev,
           dependencies: config.dep,
           scripts: {
-            dev: `node ./webpack-config/dev.js ${projKind}`,
-            build: `node ./webpack-config/prod.js ${projKind}`
+            dll: "webpack --config ./webpack-config/dll.js",
+            dev: `webpack --config ./webpack-config/dll.js && node ./webpack-config/dev.js ${projKind}`,
+            build: `webpack --config ./webpack-config/dll.js && node ./webpack-config/prod.js ${projKind}`
           }
         }),
         null,
@@ -94,14 +95,12 @@ async function createFiles() {
     await withProm(createFile, { opPath: ["webpack-config", "prod.js"] });
     await withProm(createFile, { opPath: ["webpack-config", "rules.js"] });
     await withProm(createFile, { opPath: ["webpack-config", "utils.js"] });
+    await withProm(createFile, { opPath: ["webpack-config", "dll.js"] });
+    await withProm(createFile, { opPath: ["webpack-config", "template.html"] });
 
     await withProm(makeDir, ["src"]);
     await withProm(makeDir, ["src", "example"]);
 
-    await withProm(createFile, {
-      opPath: [projKind, "entry.html"],
-      dstPath: ["src", "example", "index.html"]
-    });
     await withProm(createFile, {
       opPath: [projKind, "entry.js"],
       dstPath: ["src", "example", "index.js"]

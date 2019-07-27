@@ -40,17 +40,17 @@ const wpConfig = merge(base, {
     new MiniCssExtractPlugin({ filename: "[name]_[contenthash].css" }),
     process.argv[2] === 'vue' ? new VueLoaderPlugin() : ()=>{}
   ],
-  optimization: {
-    minimize: true,
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: "vendor"
-        }
-      }
-    }
-  },
+  // optimization: {
+  //   minimize: true,
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       vendor: {
+  //         test: /[\\/]node_modules[\\/]/,
+  //         name: "vendor"
+  //       }
+  //     }
+  //   }
+  // },
   performance: {
     hints: "warning", // 打包出来的文件大小警告
     maxEntrypointSize: 1000000, // 入口文件大小
