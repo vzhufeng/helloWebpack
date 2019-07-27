@@ -25,6 +25,7 @@ npm install @vzhufeng/hello-webpack -g
 4. npm run dev，启动工程
 
 更多配置和使用查看usage.md，https://github.com/vzhufeng/helloWebpack/blob/master/usage.md
+使用方法变更查看changelog.md，https://github.com/vzhufeng/helloWebpack/blob/master/changelog.md
 
 ## todo
 - 只打包某个目录
