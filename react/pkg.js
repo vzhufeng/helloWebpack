@@ -2,6 +2,7 @@ module.exports = {
   dep: {
     "react": "16.7.0",
     "react-dom": "16.7.0",
+    "react-router-dom": "5.0.0",
   },
   dev: {
     // babel

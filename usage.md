@@ -1,4 +1,4 @@
-## 1.0.0
+## 1.0.4
 ✅多页面
 
 ❎热更新
@@ -7,7 +7,9 @@
 
 配置文件会全部导出到工程目录下的webpack-config文件夹中，方便每个工程的特殊需求修改
 
-开发模式，输出本地文件（输出到local）：npm run dev
+准备工作，输出dll文件（输出到dll）：npm run dll
+
+开发模式，输出本地文件（输出到local）：npm run dev，打开浏览器的localhost:3001进行访问，访问路径localhost:3001/文件夹名/
 
 生产编译（输出到dist）：npm run build
 
@@ -17,29 +19,25 @@
 proj
   |-src
     |-page1
-      |-index.html
       |-index.js
       |-other.js
       |-index.scss
     |-page2
-      |-index.html
       |-index.js
       |-other.js
       |-page.scss
   |-components // 公共组件目录
-  |-utils //   公共函数目录    
+  |-utils      // 公共函数目录    
   |-assets
-    |-icon.png //最好上传cdn，能不用本地资源就不用
+    |-icon.png // 最好上传cdn，能不用本地资源就不用
 
 // for vue    
 proj
   |-src
     |-page1
-      |-index.html
       |-index.js
       |-page.vue
     |-page2
-      |-index.html
       |-index.js
       |-other.vue
   |-components // 公共组件目录
@@ -47,7 +45,7 @@ proj
   |-assets
     |-icon.png  
 ```
-其中，index.html和index.js是必需文件，index.js是打包入口，index.html是模板文件，样式文件的文件名可以随意；assets目录下可以放图标、图片等静态资源
+其中，index.js是必需文件（index.html从1.0.2开始不再需要，统一使用webpack-config/template.html），index.js是打包入口，index.html是模板文件，样式文件的文件名可以随意；assets目录下可以放图标、图片等静态资源
 
 打包后生成在dist目录下，所有页面的模板文件以所在的文件夹命名，如上图的项目结构打包后生成的dist目录如下：
 ```

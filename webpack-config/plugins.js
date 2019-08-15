@@ -12,7 +12,7 @@ for (let i = 0, len = htmlEntry.length; i < len; i++) {
     new HtmlWebpackPlugin({
       template: resolve(['webpack-config/template.html']),
       templateParameters: {
-        'vendor_src': '../dll/vendors.js'
+        'vendor_src': `http://localhost:${config.public.scriptPort}/dll/vendors.js`
       },
       filename: `${ele.name}.html`,
       chunks: [ele.name, "vendor"],

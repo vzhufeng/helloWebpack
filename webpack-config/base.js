@@ -4,7 +4,8 @@ module.exports = {
   entry: jsEntry,
   output: {
     path: config.prod.output,
-    filename: "[name]_[contenthash].js"
+    filename: "[name]_[contenthash].js",
+    publicPath: `http://localhost:${config.public.scriptPort}/dist/`
   },
   resolve: {
     alias: {

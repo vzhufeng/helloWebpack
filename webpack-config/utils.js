@@ -9,9 +9,10 @@ const resolve = p => path.resolve(__dirname, '..', ...p);
 // 自定义设置
 const config = {
   public: {
-    port: 3001,
+    htmlPort: 3001,
+    scriptPort: 3002,
     htmlEntry: 'index.html',
-    jsEntry: 'index.js'
+    jsEntry: 'index.js',
   },
   dev: {
     output: resolve(["local"])

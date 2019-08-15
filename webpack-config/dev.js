@@ -8,20 +8,29 @@ const rules = require("./rules");
 const plugins = require("./plugins");
 const { resolve, config } = require("./utils");
 
-// 启动静态资源服务
+// 启动静态资源服务和html渲染服务
 const express = require("express");
+const fs = require("fs");
 const app = express();
-// 本地监听的端口
-const port = config.public.port;
-// 本地监听的目录
-app.use(express.static(resolve([])));
+const port = config.public.htmlPort;
+app.get("*", (req, res) => {
+  const url = req.originalUrl;
+  res.send(fs.readFileSync(resolve(['local', `${url.split('/')[1]}.html`])).toString());
+});
 app.listen(port);
 
+const app2 = express();
+const port2 = config.public.scriptPort;
+app2.use(express.static(resolve([])));
+app2.listen(port2);
+
+// 
 const wpConfig = merge(base, {
   output: {
     path: config.dev.output,
     filename: "[name].js", // 避免每次watch打包出来不同的文件名
-    sourceMapFilename: "[name].map"
+    sourceMapFilename: "[name].map",
+    publicPath: `http://localhost:${config.public.scriptPort}/local/`
   },
   // 模式
   mode: "development",

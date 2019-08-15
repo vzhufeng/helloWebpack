@@ -22,9 +22,11 @@ npm install @vzhufeng/hello-webpack -g
 1. npm init，主要就是写个工程名字而已
 2. hw，向package.json写入react / vue工程相关依赖，这一步里遇到已经有相同文件或者相同字段都会询问是否需要进行覆盖
 3. npm install，安装依赖
-4. npm run dev，启动工程
+4. npm run dll，打包dll
+5. npm run dev，启动工程
 
 更多配置和使用查看usage.md，https://github.com/vzhufeng/helloWebpack/blob/master/usage.md
+
 使用方法变更查看changelog.md，https://github.com/vzhufeng/helloWebpack/blob/master/changelog.md
 
 ## todo
