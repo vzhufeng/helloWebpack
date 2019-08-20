@@ -15,7 +15,11 @@ const app = express();
 const port = config.public.htmlPort;
 app.get("*", (req, res) => {
   const url = req.originalUrl;
-  res.send(fs.readFileSync(resolve(['local', `${url.split('/')[1]}.html`])).toString());
+  if(url.indexOf('favicon.ico') > -1){
+    res.send('123');
+  }else{
+    res.send(fs.readFileSync(resolve(['local', `${url.split('/')[1]}.html`])).toString());
+  }
 });
 app.listen(port);
 
